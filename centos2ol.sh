@@ -556,7 +556,7 @@ fi
 # CentOS specific replacements
 case "$os_version" in
     7*)
-        # Prior to switch this is a dependancy of the yum rpm, now we've switched we can remove it
+        # Prior to switch this is a dependency of the yum rpm, now we've switched we can remove it
         if rpm -q yum-plugin-fastestmirror; then
             yum erase -y yum-plugin-fastestmirror
         fi
