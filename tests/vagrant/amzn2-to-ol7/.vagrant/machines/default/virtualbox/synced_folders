@@ -1,1 +1,0 @@
-{"virtualbox":{"/vagrant/migrate-to-oracle-linux":{"guestpath":"/vagrant/migrate-to-oracle-linux","hostpath":"/home/scoter/migrate-to-ol","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/scoter/migrate-to-ol/tests/vagrant/amzn2-to-ol7","disabled":false,"__vagrantfile":true}}}
