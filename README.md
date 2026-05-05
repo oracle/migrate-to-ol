@@ -7,6 +7,8 @@ This repository contains two scripts for Oracle Linux migration workflows:
 - 🪞 `mirror-oracle-linux-yum.sh` builds an Oracle Linux yum mirror that migration
   targets can use instead of reaching `yum.oracle.com` directly.
 
+NOTE: those scripts come as a community contribution and are not covered by Oracle Support.
+
 ## 📍 Where To Run Each Script
 
 🪞 Run `mirror-oracle-linux-yum.sh` only on the yum mirror system.
