@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# SPDX-License-Identifier: UPL-1.0
+# Copyright (c) 2020, 2021 Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl
 #
 # migrate-to-oracle-linux.sh - migrate EL-compatible systems to Oracle Linux.
 #
