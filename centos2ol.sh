@@ -30,7 +30,8 @@ bad_packages=(centos-backgrounds centos-gpg-keys centos-logos centos-release cen
               centos-release-virt-common centos-release-xen centos-release-xen-410 \
               centos-release-xen-412 centos-release-xen-46 centos-release-xen-48 centos-release-xen-common \
               libreport-centos libreport-plugin-mantisbt libreport-plugin-rhtsupport python3-syspurpose \
-              python-oauth rocky-backgrounds rocky-gpg-keys rocky-logos rocky-release sl-logos yum-rhn-plugin)
+              python-oauth rocky-backgrounds rocky-gpg-keys rocky-logos rocky-release sl-logos yum-rhn-plugin \
+              almalinux-gpg-keys almalinux-release almalinux-logos)
 
 usage() {
     echo "Usage: ${0##*/} [OPTIONS]"
@@ -129,6 +130,7 @@ case "${old_release}" in
     redhat-release*) ;;
     centos-release* | centos-linux-release*) ;;
     rocky-release*) ;;
+    almalinux-release*);;
     sl-release*) ;;
     oraclelinux-release*|enterprise-release*)
         exit_message "You appear to be already running Oracle Linux."
@@ -395,6 +397,10 @@ fi
 # Most distros keep their /etc/yum.repos.d content in the -release rpm. Rocky Linux 8 does not.
 if [[ $old_release =~ ^rocky-release-*.* ]]; then
     old_release=$(rpm -qa rocky*repos)
+fi
+# Most distros keep their /etc/yum.repos.d content in the -release rpm. Alma Linux 9 does not.
+if [[ $old_release =~ ^almalinux-release-*.* ]]; then
+    old_release=$(rpm -qa almalinux*repos)
 fi
 
 echo "Backing up and removing old repository files..."
