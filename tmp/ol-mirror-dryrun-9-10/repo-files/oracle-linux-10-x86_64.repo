@@ -1,0 +1,190 @@
+[ol10_baseos_latest]
+name=Oracle Linux 10 BaseOS Latest ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_baseos_latest/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=1
+
+
+[ol10_appstream]
+name=Oracle Linux 10 Application Stream Packages ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_appstream/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=1
+
+
+[ol10_u0_baseos_base]
+name=Oracle Linux 10 BaseOS GA ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_u0_baseos_base/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_u1_baseos_base]
+name=Oracle Linux 10.1 BaseOS GA ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_u1_baseos_base/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_addons]
+name=Oracle Linux 10 Addons ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_addons/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_codeready_builder]
+name=Oracle Linux 10 CodeReady Builder ($basearch) - (Unsupported)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_codeready_builder/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_distro_builder]
+name=Oracle Linux 10 Distro Builder ($basearch) - (Unsupported)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_distro_builder/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+[ol10_UEKR8]
+name=Oracle Linux 10 UEK Release 8 ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_UEKR8/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=1
+
+
+[ol10_RDMA]
+name=Oracle Linux 10 ($basearch) RDMA
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_RDMA/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_kvm_utils]
+name=Oracle Linux 10 KVM Utilities ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_kvm_utils/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+priority=10
+enabled=0
+
+
+# Repositories discovered from yum.oracle.com repository index.
+
+
+[ol10_MySQL_connectors_community]
+name=MySQL Connectors Community ($basearch)
+description=Latest MySQL Connectors Community packages for Oracle Linux 10.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_MySQL_connectors_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_MySQL_innovation_community]
+name=MySQL Innovation Server Community ($basearch)
+description=Latest MySQL Innovation Community Server packages for Oracle Linux 10.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_MySQL_innovation_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_MySQL_innovation_tools_community]
+name=MySQL Innovation Tools Community ($basearch)
+description=Latest MySQL Innovation Tools Community packages for Oracle Linux 10.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_MySQL_innovation_tools_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_MySQL97_community]
+name=MySQL 9.7 Server Community ($basearch)
+description=Latest MySQL 9.7 Community Server packages for Oracle Linux 10.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_MySQL97_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_MySQL97_tools_community]
+name=MySQL 9.7 Tools Community ($basearch)
+description=Latest MySQL 9.7 Tools Community packages for Oracle Linux 10.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_MySQL97_tools_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_MySQL84_community]
+name=MySQL 8.4 Server Community ($basearch)
+description=Latest MySQL 8.4 Community Server packages for Oracle Linux 10.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_MySQL84_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_MySQL84_tools_community]
+name=MySQL 8.4 Tools Community ($basearch)
+description=Latest MySQL 8.4 Tools Community packages for Oracle Linux 10.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_MySQL84_tools_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_java]
+name=Oracle Java SE Development Kit (JDK) ($basearch)
+description=Oracle Java SE Development Kit (JDK) on Oracle Linux 10. More information and installation details
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_java/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_oracle_instantclient23]
+name=Oracle Database Instant Client 26ai ($basearch)
+description=Latest Oracle Database Instant Client 26ai for Oracle Linux 10. More information and installation details .
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_oracle_instantclient23/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_u1_developer_EPEL]
+name=EPEL Packages ($basearch)
+description=Latest EPEL packages for Oracle Linux 10.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_u1_developer_EPEL/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_developer]
+name=Developer Packages ($basearch)
+description=Latest packages for test and development for Oracle Linux 10 (not for production use).
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_developer/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol10_developer_UEKnext]
+name=Developer Release of UEK-next ($basearch)
+description=Developer release of UEK-next for Oracle Linux 10 - (unsupported, not for production use).
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol10_developer_UEKnext/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+

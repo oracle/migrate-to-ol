@@ -1,0 +1,554 @@
+[ol8_baseos_latest]
+name=Oracle Linux 8 BaseOS Latest ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_baseos_latest/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=1
+
+
+[ol8_appstream]
+name=Oracle Linux 8 Application Stream ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_appstream/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=1
+
+
+[ol8_codeready_builder]
+name=Oracle Linux 8 CodeReady Builder ($basearch) - Unsupported
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_codeready_builder/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_distro_builder]
+name=Oracle Linux 8 Distro Builder ($basearch) - Unsupported
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_distro_builder/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+
+[ol8_u0_baseos_base]
+name=Oracle Linux 8 BaseOS GA ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_u0_baseos_base/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_u1_baseos_base]
+name=Oracle Linux 8.1 BaseOS ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_u1_baseos_base/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_u2_baseos_base]
+name=Oracle Linux 8.2 BaseOS ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_u2_baseos_base/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_u3_baseos_base]
+name=Oracle Linux 8.3 BaseOS ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_u3_baseos_base/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_u4_baseos_base]
+name=Oracle Linux 8.4 BaseOS ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_u4_baseos_base/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_u5_baseos_base]
+name=Oracle Linux 8.5 BaseOS ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_u5_baseos_base/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_u6_baseos_base]
+name=Oracle Linux 8.6 BaseOS ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_u6_baseos_base/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_u7_baseos_base]
+name=Oracle Linux 8.7 BaseOS ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_u7_baseos_base/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_u8_baseos_base]
+name=Oracle Linux 8.8 BaseOS ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_u8_baseos_base/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_u9_baseos_base]
+name=Oracle Linux 8.9 BaseOS ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_u9_baseos_base/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_u10_baseos_base]
+name=Oracle Linux 8.10 BaseOS ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_u10_baseos_base/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_addons]
+name=Oracle Linux 8 Addons ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_addons/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_u4_security_validation]
+name=Oracle Linux $releasever Update 4 ($basearch) Security Validations
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_u4_security_validation/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_MODRHCK]
+name=Latest RHCK with fixes from Oracle for Oracle Linux $releasever ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_MODRHCK/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+priority=20
+enabled=0
+
+[ol8_UEKR7]
+name=Latest Unbreakable Enterprise Kernel Release 7 for Oracle Linux $releasever ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_UEKR7/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_UEKR6]
+name=Latest Unbreakable Enterprise Kernel Release 6 for Oracle Linux $releasever ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_UEKR6/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=1
+
+
+[ol8_UEKR7_RDMA]
+name=Oracle Linux 8 UEK7 RDMA ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_UEKR7_RDMA/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_UEKR6_RDMA]
+name=Oracle Linux 8 UEK6 RDMA ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_UEKR6_RDMA/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+[ol8_kvm_appstream]
+name=Oracle Linux $releasever KVM Application Stream ($basearch)
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_kvm_appstream/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+# Repositories discovered from yum.oracle.com repository index.
+
+
+[ol8_leapp]
+name=Leapp ($basearch)
+description=Leapp Upgrade Utilities for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_leapp/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_automation2_3]
+name=Oracle Linux Automation Manager 2.3 ($basearch)
+description=Latest Packages for Oracle Linux Oracle Linux Automation Manager 2.3.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_automation2_3/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_ovirt45]
+name=oVirt 4.5 ($basearch)
+description=Latest package for oVirt Release 4.5 on Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_ovirt45/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_ovirt45_extras]
+name=oVirt 4.5 Extra Packages ($basearch)
+description=Latest extra packages for oVirt Release 4.5 on Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_ovirt45_extras/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_ocne]
+name=Oracle Cloud Native Environment ($basearch)
+description=Latest Oracle Cloud Native Environment Packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_ocne/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_oraclelinuxmanager210_client]
+name=Oracle Linux Manager 2.10 Client ($basearch)
+description=Latest Oracle Linux Manager 2.10 Client packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_oraclelinuxmanager210_client/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_MySQL_connectors_community]
+name=MySQL Connectors Community ($basearch)
+description=Latest MySQL Connectors Community packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_MySQL_connectors_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_MySQL_innovation_community]
+name=MySQL Innovation Server Community ($basearch)
+description=Latest MySQL Innovation Community Server packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_MySQL_innovation_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_MySQL_innovation_tools_community]
+name=MySQL Innovation Tools Community ($basearch)
+description=Latest MySQL Innovation Tools Community packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_MySQL_innovation_tools_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_MySQL97_community]
+name=MySQL 9.7 Server Community ($basearch)
+description=Latest MySQL 9.7 Community Server packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_MySQL97_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_MySQL97_tools_community]
+name=MySQL 9.7 Tools Community ($basearch)
+description=Latest MySQL 9.7 Tools Community packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_MySQL97_tools_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_MySQL84_community]
+name=MySQL 8.4 Server Community ($basearch)
+description=Latest MySQL 8.4 Community Server packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_MySQL84_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_MySQL84_tools_community]
+name=MySQL 8.4 Tools Community ($basearch)
+description=Latest MySQL 8.4 Tools Community packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_MySQL84_tools_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_java]
+name=Oracle Java SE Development Kit (JDK) ($basearch)
+description=Oracle Java SE Development Kit (JDK) on Oracle Linux 8. More information and installation details.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_java/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_oracle_instantclient23]
+name=Oracle Database Instant Client 26ai ($basearch)
+description=Latest Oracle Database Instant Client 26ai for Oracle Linux 8. More information and installation details.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_oracle_instantclient23/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_oracle_instantclient21]
+name=Oracle Database Instant Client 21c ($basearch)
+description=Latest Oracle Database Instant Client 21c for Oracle Linux 8. More information and installation details.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_oracle_instantclient21/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_oracle_instantclient]
+name=Oracle Database Instant Client 19c ($basearch)
+description=Oracle Database Instant Client 19c for Oracle Linux 8. More information and installation details.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_oracle_instantclient/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_gluster_appstream]
+name=Gluster AppStream Latest Arm ($basearch)
+description=Developer Preview of Gluster AppStream packages for Oracle Linux 8 (aarch64).
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_gluster_appstream/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_developer]
+name=Developer Packages ($basearch)
+description=Latest packages for test and development for Oracle Linux 8 (not for production use).
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_developer/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_developer_EPEL]
+name=EPEL Packages ($basearch)
+description=Latest EPEL packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_developer_EPEL/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_developer_EPEL_modular]
+name=EPEL Modular Packages ($basearch)
+description=EPEL Modular packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_developer_EPEL_modular/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_developer_olcne]
+name=Oracle Cloud Native Environment (Developer) ($basearch)
+description=Oracle Cloud Native Environment Packages for test and development
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_developer_olcne/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_oracle_software]
+name=Oracle Database Tools ($basearch)
+description=Oracle Database Tools for Developers
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_oracle_software/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_developer_archive]
+name=Developer Archive ($basearch)
+description=Archived developer packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_developer_archive/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_ovirt44]
+name=oVirt 4.4 ($basearch)
+description=Latest package for oVirt Release 4.4 on Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_ovirt44/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_ovirt44_extras]
+name=oVirt 4.4 Extra Packages ($basearch)
+description=Latest extra packages for oVirt Release 4.4 on Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_ovirt44_extras/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_olcne19]
+name=Oracle Cloud Native Environment 1.9 ($basearch)
+description=Latest Oracle Cloud Native Environment Release 1.9 Packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_olcne19/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_olcne18]
+name=Oracle Cloud Native Environment 1.8 ($basearch)
+description=Latest Oracle Cloud Native Environment Release 1.8 Packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_olcne18/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_olcne17]
+name=Oracle Cloud Native Environment 1.7 ($basearch)
+description=Latest Oracle Cloud Native Environment Release 1.7 Packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_olcne17/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_olcne16]
+name=Oracle Cloud Native Environment 1.6 ($basearch)
+description=Latest Oracle Cloud Native Environment Release 1.6 Packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_olcne16/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_olcne15]
+name=Oracle Cloud Native Environment 1.5 ($basearch)
+description=Latest Oracle Cloud Native Environment Release 1.5 Packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_olcne15/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_olcne14]
+name=Oracle Cloud Native Environment 1.4 ($basearch)
+description=Latest Oracle Cloud Native Environment Release 1.4 Packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_olcne14/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_olcne13]
+name=Oracle Cloud Native Environment 1.3 ($basearch)
+description=Latest Oracle Cloud Native Environment Release 1.3 Packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_olcne13/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_olcne12]
+name=Oracle Cloud Native Environment 1.2 ($basearch)
+description=Latest Oracle Cloud Native Environment Release 1.2 Packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_olcne12/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_automation2_2]
+name=Oracle Linux Automation Manager 2.2 ($basearch)
+description=Latest Packages for Oracle Linux Oracle Linux Automation Manager 2.2.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_automation2_2/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_automation2]
+name=Oracle Linux Automation Manager 2.1 ($basearch)
+description=Latest Packages for Oracle Linux Oracle Linux Automation Manager 2.1.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_automation2/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_automation]
+name=Oracle Linux Automation Manager 1.0 ($basearch)
+description=Latest Packages for Oracle Linux Oracle Linux Automation Manager 1.0.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_automation/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_spacewalk210_client]
+name=Spacewalk 2.10 Client ($basearch)
+description=Latest Spacewalk 2.10 Client packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_spacewalk210_client/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_MySQL80_community]
+name=MySQL 8.0 Server Community ($basearch)
+description=Latest MySQL 8.0 Community Server packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_MySQL80_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_MySQL80_connectors_community]
+name=MySQL 8.0 Connectors Community ($basearch)
+description=Latest MySQL 8.0 Connectors Community packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_MySQL80_connectors_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+
+
+[ol8_MySQL80_tools_community]
+name=MySQL 8.0 Tools Community ($basearch)
+description=Latest MySQL 8.0 Tools Community packages for Oracle Linux 8.
+baseurl=https://mirror.example.local/oraclelinux/x86_64/ol8_MySQL80_tools_community/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+gpgcheck=1
+enabled=0
+

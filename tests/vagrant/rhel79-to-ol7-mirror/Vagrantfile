@@ -1,0 +1,49 @@
+# frozen_string_literal: true
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/rhel7"
+  config.vm.box_version = "4.3.12"
+  config.vm.hostname = "rhel79-to-ol7-mirror"
+  config.vm.synced_folder "../../..", "/vagrant/migrate-to-oracle-linux"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "rhel79-to-ol7-mirror"
+    vb.memory = 4096
+    vb.cpus = 2
+  end
+
+  config.vm.provision "shell", privileged: true, inline: <<~SHELL
+    set -euxo pipefail
+
+    cd /vagrant/migrate-to-oracle-linux
+    mkdir -p test-artifacts/rhel79-to-ol7-mirror
+
+    cat /etc/os-release | tee test-artifacts/rhel79-to-ol7-mirror/source-os-release.txt
+    . /etc/os-release
+    test "${ID}" = "rhel"
+    test "${VERSION_ID}" = "7.9"
+
+    rpm -qa --qf '%{NAME}\\t%{EPOCHNUM}\\t%{VERSION}\\t%{RELEASE}\\t%{ARCH}\\t%{VENDOR}\\n' \
+      | sort > test-artifacts/rhel79-to-ol7-mirror/source-rpms.tsv
+
+    bash -n migrate-to-oracle-linux.sh
+    ./migrate-to-oracle-linux.sh \
+      --assumeyes \
+      --target-version latest \
+      --kernel uek \
+      --yum-mirror https://157.151.188.209 \
+      --no-reboot-check \
+      2>&1 | tee test-artifacts/rhel79-to-ol7-mirror/migration.log
+
+    cat /etc/os-release | tee test-artifacts/rhel79-to-ol7-mirror/target-os-release.txt
+    rpm -qa --qf '%{NAME}\\t%{EPOCHNUM}\\t%{VERSION}\\t%{RELEASE}\\t%{ARCH}\\t%{VENDOR}\\n' \
+      | sort > test-artifacts/rhel79-to-ol7-mirror/target-rpms.tsv
+
+    yum check 2>&1 | tee test-artifacts/rhel79-to-ol7-mirror/yum-check.log
+    rpm -qa --qf '%{VENDOR}\\n' | sort | uniq -c \
+      | tee test-artifacts/rhel79-to-ol7-mirror/target-vendors.txt
+    grubby --default-kernel | tee test-artifacts/rhel79-to-ol7-mirror/default-kernel.txt
+
+    find /var/lib/migrate-to-oracle-linux -type f -name '*.html' -print -exec cp -v {} test-artifacts/rhel79-to-ol7-mirror/ \\;
+  SHELL
+end

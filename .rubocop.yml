@@ -1,9 +1,0 @@
-# Global options
-AllCops:
-  NewCops: enable
-  DisplayCopNames: true
-
-Metrics/BlockLength:
-  Enabled: false
-Lint/ParenthesesAsGroupedExpression:
-  Enabled: false

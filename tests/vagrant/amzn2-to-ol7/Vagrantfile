@@ -1,0 +1,43 @@
+# frozen_string_literal: true
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "gbailey/amzn2"
+  config.vm.box_version = "20260308.0.0"
+  config.vm.hostname = "amzn2-to-ol7"
+  config.vm.synced_folder "../../..", "/vagrant/migrate-to-oracle-linux"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "amzn2-to-ol7"
+    vb.memory = 4096
+    vb.cpus = 2
+  end
+
+  config.vm.provision "shell", privileged: true, inline: <<~SHELL
+    set -euxo pipefail
+
+    cd /vagrant/migrate-to-oracle-linux
+    mkdir -p test-artifacts/amzn2-to-ol7
+
+    cat /etc/os-release | tee test-artifacts/amzn2-to-ol7/source-os-release.txt
+    . /etc/os-release
+    test "${ID}" = "amzn"
+    test "${VERSION_ID}" = "2"
+
+    rpm -qa --qf '%{NAME}\\t%{EPOCHNUM}\\t%{VERSION}\\t%{RELEASE}\\t%{ARCH}\\t%{VENDOR}\\n' \
+      | sort > test-artifacts/amzn2-to-ol7/source-rpms.tsv
+
+    bash -n migrate-to-oracle-linux.sh
+    ./migrate-to-oracle-linux.sh \
+      --assumeyes \
+      --target-version latest \
+      --kernel uek \
+      --no-reboot-check \
+      2>&1 | tee test-artifacts/amzn2-to-ol7/migration.log
+
+    cat /etc/os-release | tee test-artifacts/amzn2-to-ol7/target-os-release.txt
+    rpm -qa --qf '%{NAME}\\t%{EPOCHNUM}\\t%{VERSION}\\t%{RELEASE}\\t%{ARCH}\\t%{VENDOR}\\n' \
+      | sort > test-artifacts/amzn2-to-ol7/target-rpms.tsv
+
+    find /var/lib/migrate-to-oracle-linux -type f -name '*.html' -print -exec cp -v {} test-artifacts/amzn2-to-ol7/ \\;
+  SHELL
+end

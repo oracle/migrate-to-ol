@@ -1,68 +1,46 @@
-# Style and integration testing
+# Testing
 
-Any new functionality added to `centos2.ol.sh` should include an update to the
-test framework for that functionality.
+Migration testing must be done on disposable systems. Use VM snapshots and keep
+console access available in case repository or bootloader state needs manual
+repair.
 
-## Prerequisites
+## Suggested Matrix
 
-The following tools must be installed before running any tests:
+| Source | Release | Expected target |
+| --- | --- | --- |
+| CentOS Linux | 7.9 | Oracle Linux 7 latest |
+| CentOS Linux | 8.4 or newer | Oracle Linux 8 |
+| CentOS Stream | 8, 9, 10 | Oracle Linux latest within the matching major |
+| AlmaLinux | 8, 9, 10 | Oracle Linux matching major |
+| RHEL | 7.9 | Oracle Linux 7 latest |
+| RHEL | 8, 9, 10 | Oracle Linux matching major |
+| Rocky Linux | 8, 9, 10 | Oracle Linux matching major |
 
-* Ruby 2.6
-* [`shellcheck`](https://github.com/koalaman/shellcheck) available in `$PATH`
-* [Oracle VM VirtualBox](https://www.virtualbox.org)
-* [Vagrant](https://www.vagrantup.com)
-
-The following command needs to be run once to ensure all the required RubyGems
-are installed into the `vendor/bundle` directory:
-
-```shell
-bundle install
-```
-
-## Style tests
-
-Run `shellcheck` and `rubocop` over the `centos2.ol` script
-and the test framework files, including `Gemfile` and `Rakefile`:
+## Basic Smoke Test
 
 ```bash
-bundle exec rake style
+sudo ./migrate-to-oracle-linux.sh --dry-run
+sudo ./migrate-to-oracle-linux.sh -y
+sudo reboot
+cat /etc/os-release
+rpm -q oraclelinux-release-el$(rpm -E '%{rhel}')
+dnf repolist --enabled
 ```
 
-Just check the `centos2ol.sh` shell script using `shellcheck`:
+## RHEL Exact Reinstall Validation
+
+Before migration:
 
 ```bash
-bundle exec rake style:shell
+rpm -qa --qf '%{nevra}\n' | sort -u > /root/before.nevra
 ```
 
-Just check the Ruby test framework using `rubocop`:
+After migration:
 
 ```bash
-bundle exec rake style:ruby
+rpm -qa --qf '%{nevra}\n' | sort -u > /root/after.nevra
+comm -23 /root/before.nevra /root/after.nevra
 ```
 
-## Integration tests
-
-Check that the `centos2ol.sh` script can successfully switch each major
-version of CentOS to Oracle Linux and that each parameter works as expected.
-This test uses Oracle VM VirtualBox, Vagrant and Kitchen and can take a long
-time to complete. It requires virtualization support on the host on which it
-runs.
-
-```bash
-bundle exec rake integration:vagrant:test
-```
-
-A successful run should finish with output similar to this:
-
-```bash
-Profile Summary: 1 successful control, 0 control failures, 0 controls skipped
-Test Summary: 3 successful, 0 failures, 0 skipped
-       Finished verifying <uek-centos-83> (0m1.97s).
-       Finished testing <uek-centos-83> (6m3.67s).
------> Destroying <uek-centos-83>...
-       ==> default: Forcing shutdown of VM...
-       ==> default: Destroying VM and associated drives...
-       Vagrant instance <uek-centos-83> destroyed.
-       Finished destroying <uek-centos-83> (0m4.61s).
------> Test Kitchen is finished. (19m7.22s)
-```
+Expected differences are release/repository/GPG packages and packages listed in
+`/var/lib/migrate-to-oracle-linux/<run-id>/missing-exact.nevra`.
