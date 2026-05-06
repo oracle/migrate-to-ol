@@ -739,6 +739,13 @@ snapshot_system() {
         : > "${STATE_DIR}/enabled-repos.before"
     fi
 
+    if [[ "$SOURCE_MAJOR" != "7" ]]; then
+        if ! run_capture "${STATE_DIR}/enabled-modules.before" "$DNF_CMD" module list --enabled; then
+            warn "could not snapshot enabled source modules; continuing"
+            : > "${STATE_DIR}/enabled-modules.before"
+        fi
+    fi
+
     if [[ -d /etc/yum.repos.d ]]; then
         mkdir -p "${STATE_DIR}/yum.repos.d.before"
         if ! (( DRY_RUN )); then
@@ -1302,6 +1309,57 @@ refresh_oracle_repos() {
         "${DNF_BASE_ARGS[@]}" \
         "${ORACLE_REPO_ARGS[@]}" \
         makecache
+}
+
+switch_source_modules_to_oracle_streams() {
+    [[ "$SOURCE_MAJOR" != "7" ]] || return 0
+
+    local enabled_modules="${STATE_DIR}/enabled-modules.before"
+    local reset_modules="${STATE_DIR}/source-modules-to-reset"
+    local enable_modules="${STATE_DIR}/oracle-modules-to-enable"
+
+    [[ -s "$enabled_modules" ]] || return 0
+
+    awk '
+        function oracle_stream(stream) {
+            gsub(/\[.*$/, "", stream)
+            if (stream == "rhel") {
+                return "ol"
+            }
+            if (stream ~ /^rhel[0-9]+$/) {
+                sub(/^rhel/, "ol", stream)
+                return stream
+            }
+            return ""
+        }
+        /^[[:space:]]*$/ { next }
+        $1 == "Name" || $1 == "Hint:" || $1 == "Last" || $1 ~ /^(CentOS|Red|Rocky|AlmaLinux|Oracle|Extra)$/ { next }
+        $2 ~ /^rhel/ {
+            target = oracle_stream($2)
+            if (target != "") {
+                print $1 "\t" $1 ":" target
+            }
+        }
+    ' "$enabled_modules" | sort -u > "${enable_modules}.tmp"
+
+    if [[ ! -s "${enable_modules}.tmp" ]]; then
+        rm -f "${enable_modules}.tmp"
+        return 0
+    fi
+
+    cut -f 1 "${enable_modules}.tmp" | sort -u > "$reset_modules"
+    cut -f 2 "${enable_modules}.tmp" | sort -u > "$enable_modules"
+    rm -f "${enable_modules}.tmp"
+
+    info "switching enabled source module streams to Oracle Linux streams"
+    xargs -r -a "$reset_modules" "$DNF_CMD" -y \
+        "${DNF_BASE_ARGS[@]}" \
+        "${ORACLE_REPO_ARGS[@]}" \
+        module reset 2>&1 | tee -a "$LOG_FILE"
+    xargs -r -a "$enable_modules" "$DNF_CMD" -y \
+        "${DNF_BASE_ARGS[@]}" \
+        "${ORACLE_REPO_ARGS[@]}" \
+        module enable 2>&1 | tee -a "$LOG_FILE"
 }
 
 ensure_repoquery_available() {
@@ -2194,6 +2252,7 @@ tr.nearest-higher-release { background: #fef9c3; }
 tr.nearest-lower-release { background: #ffedd5; }
 tr.third-party { background: #ffedd5; }
 tr.replaced-distribution-package { background: #e0f2fe; }
+tr.replaced-source-vendor { background: #e0f2fe; }
 tr.replaced-by-linux-firmware { background: #e0f2fe; }
 tr.removed-rhel-only { background: #fee2e2; }
 tr.removed-amazon-only { background: #fee2e2; }
@@ -2213,6 +2272,7 @@ EOF
 <span>3rd Party: package retained from a non-Oracle third-party vendor</span>
 <span>unavailable: no Oracle Linux replacement found</span>
 <span>replaced-distribution-package: source release package replaced by Oracle Linux release packages</span>
+<span>replaced-source-vendor: source-vendor package replaced by a differently named Oracle Linux package</span>
 <span>replaced-by-linux-firmware: EL10 split firmware package replaced by Oracle Linux linux-firmware packages</span>
 <span>removed-rhel-only: RHEL-only source package or GPG pseudo-package intentionally removed by policy</span>
 <span>removed-amazon-only: Amazon Linux 2-only package intentionally removed by policy</span>
@@ -2365,6 +2425,15 @@ build_sync_report() {
             }
             return best_key
         }
+        function replacement_name(name) {
+            if (name ~ /^(almalinux|centos|rocky|redhat)-logos$/) {
+                return "oracle-logos"
+            }
+            if (name ~ /^(almalinux|centos|rocky|redhat)-logos-httpd$/) {
+                return "oracle-logos-httpd"
+            }
+            return ""
+        }
         function is_release_package(name) {
             return name ~ /^(almalinux|centos|centos-linux|centos-stream|redhat|rocky|oraclelinux)-(release|repos|gpg-keys)$/ || name ~ /^oraclelinux-release-el[0-9]+$/ || name == "redhat-release" || name ~ /^(amazon-linux-(extras|repo-(cdn|s3))|system-release(-cpe)?)$/
         }
@@ -2495,6 +2564,9 @@ build_sync_report() {
             if (status == "replaced-distribution-package" || status == "replaced-by-linux-firmware") {
                 return "replaced"
             }
+            if (status == "replaced-source-vendor") {
+                return "replaced"
+            }
             if (status == "updated") {
                 return "updated"
             }
@@ -2550,6 +2622,7 @@ build_sync_report() {
             source_nevra = nevra(name, epoch, version, release, arch)
             key = name SUBSEP arch
             target_key = key
+            replacement = replacement_name(name)
 
             if (is_rhel_only_removed_package(name)) {
                 status = "removed-rhel-only"
@@ -2575,6 +2648,10 @@ build_sync_report() {
                 } else {
                     status = mapped_status(source_nevra, target_key, epoch, version, release)
                 }
+                print source_nevra "\t" after_nevra[target_key] "\t" name "\t" arch "\t" vendor "\t" after_vendor[target_key] "\t" status "\t" status_class(status) >> output_tsv
+            } else if (replacement != "" && replacement in after_name_count) {
+                target_key = best_name_key(replacement, epoch, version, release)
+                status = "replaced-source-vendor"
                 print source_nevra "\t" after_nevra[target_key] "\t" name "\t" arch "\t" vendor "\t" after_vendor[target_key] "\t" status "\t" status_class(status) >> output_tsv
             } else if (is_release_package(name) && release_targets != "") {
                 status = "replaced-distribution-package"
@@ -2640,6 +2717,7 @@ EOF
 <span>downgraded: Oracle Linux package EVR is older than the source package EVR</span>
 <span>replaced-distribution-package: source release package replaced by Oracle Linux release packages</span>
 <span>replaced-by-linux-firmware: EL10 split firmware package replaced by Oracle Linux linux-firmware packages</span>
+<span>replaced-source-vendor: source-vendor package replaced by a differently named Oracle Linux package</span>
 <span>removed-rhel-only: RHEL-only source package or GPG pseudo-package intentionally removed by policy</span>
 <span>removed-amazon-only: Amazon Linux 2-only package intentionally removed by policy</span>
 <span>removed-source-kernel: source-vendor runtime kernel removed after selected Oracle kernel installation</span>
@@ -2816,6 +2894,29 @@ is_selected_kernel_flavor_package_name() {
     [[ "$1" == kernel || "$1" == kernel-* ]] && [[ "$1" != kernel-uek && "$1" != kernel-uek-* ]]
 }
 
+is_rhck_runtime_kernel_package_name() {
+    case "$1" in
+        kernel|kernel-core|kernel-modules|kernel-modules-core|kernel-modules-extra)
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
+kernel_capability_required_by_non_kernel_package() {
+    local name
+
+    while read -r name; do
+        [[ -n "$name" ]] || continue
+        is_runtime_kernel_package_name "$name" && continue
+        return 0
+    done < <(rpm -q --whatrequires kernel --qf '%{NAME}\n' 2>/dev/null | sort -u)
+
+    return 1
+}
+
 is_oracle_vendor() {
     [[ "$1" =~ Oracle[[:space:]]+America ]]
 }
@@ -2846,14 +2947,23 @@ source_vendor_regex() {
 remove_nonrunning_runtime_kernels() {
     local running_kernel remove_list=()
     local name nvra kernel_version vendor
+    local keep_oracle_rhck=0
 
     running_kernel="$(uname -r)"
+
+    if [[ "$KERNEL_FLAVOR" == "uek" ]] && kernel_capability_required_by_non_kernel_package; then
+        keep_oracle_rhck=1
+        info "keeping Oracle Linux RHCK runtime kernel packages because installed RPMs require the kernel capability"
+    fi
 
     while IFS=$'\t' read -r name nvra kernel_version vendor; do
         [[ -n "$name" && -n "$nvra" && -n "$kernel_version" ]] || continue
         is_runtime_kernel_package_name "$name" || continue
         [[ "$kernel_version" != "$running_kernel" ]] || continue
         if is_selected_kernel_flavor_package_name "$name" && is_oracle_vendor "$vendor"; then
+            continue
+        fi
+        if (( keep_oracle_rhck )) && is_rhck_runtime_kernel_package_name "$name" && is_oracle_vendor "$vendor"; then
             continue
         fi
         remove_list+=("$nvra")
@@ -3129,8 +3239,11 @@ replace_source_vendor_packages() {
             print "source_nvra\ttarget_nevra\tname\tepoch\tversion\tsource_release\ttarget_release\tarch\tstatus" > remove_tsv
         }
         function replacement_name(name) {
-            if (name == "centos-logos") {
+            if (name ~ /^(almalinux|centos|rocky|redhat)-logos$/) {
                 return "oracle-logos"
+            }
+            if (name ~ /^(almalinux|centos|rocky|redhat)-logos-httpd$/) {
+                return "oracle-logos-httpd"
             }
             return name
         }
@@ -3550,6 +3663,7 @@ main() {
         reinstall_exact_packages
         reinstall_nearest_packages
     fi
+    switch_source_modules_to_oracle_streams
     distro_sync_oracle
     remove_remaining_amazon_only_packages
     if [[ "$MIGRATION_MODE" == "preserve-release" ]]; then

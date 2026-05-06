@@ -21,9 +21,9 @@ intended to become the yum mirror.
 - 🔎 adds repositories listed on Oracle yum index pages and stores their page
   description in `description=` when they match the curated set;
 - 🚫 excludes source RPM repositories and does not mirror `.src.rpm` packages;
-- ⬆️ mirrors only the newest available package build for each RPM name;
+- 📚 mirrors all available binary RPM builds in each selected repository;
 - 🧠 mirrors only the latest UEK kernel repository for each OL major release;
-- 🔁 runs `reposync --download-metadata --newest-only --delete --remote-time`,
+- 🔁 runs `reposync --download-metadata --delete --remote-time`,
   preserving upstream metadata, including modularity metadata;
 - ⚡ supports parallel repository syncs with `--jobs` by isolating dnf cache,
   persist, and log directories per repository worker;
@@ -76,26 +76,27 @@ also writes the same information to:
 ## 💾 Disk Space Estimate
 
 Repository size changes as Oracle publishes new packages. The values below are
-planning estimates for the default mirror behavior: binary RPMs only, newest RPM
-builds only, minor-release repositories for OL8, OL9, and OL10, no OL7 minor
-repositories, and only the latest UEK kernel repository per major release.
+planning estimates for the default mirror behavior: binary RPMs only, all
+available RPM builds from each selected repository, minor-release repositories
+for OL8, OL9, and OL10, no OL7 minor repositories, and only the latest UEK
+kernel repository per major release.
 
 Reserve at least 20-30% additional free space for metadata, temporary files,
 future package growth, and filesystem overhead.
 
 | Oracle Linux major | Architecture | Estimated mirror size |
 | --- | --- | --- |
-| OL7 | `x86_64` | 300-450 GB |
-| OL7 | `aarch64` | 90-150 GB |
-| OL8 | `x86_64` | 650-950 GB |
-| OL8 | `aarch64` | 450-700 GB |
-| OL9 | `x86_64` | 500-750 GB |
-| OL9 | `aarch64` | 350-600 GB |
-| OL10 | `x86_64` | 180-300 GB |
-| OL10 | `aarch64` | 150-250 GB |
+| OL7 | `x86_64` | 450-700 GB |
+| OL7 | `aarch64` | 150-250 GB |
+| OL8 | `x86_64` | 900 GB-1.4 TB |
+| OL8 | `aarch64` | 650 GB-1.0 TB |
+| OL9 | `x86_64` | 700 GB-1.1 TB |
+| OL9 | `aarch64` | 500-850 GB |
+| OL10 | `x86_64` | 250-450 GB |
+| OL10 | `aarch64` | 220-400 GB |
 
 For a full default mirror of OL7, OL8, OL9, and OL10 for both `x86_64` and
-`aarch64`, plan for roughly 3-4 TB usable space before local retention,
+`aarch64`, plan for roughly 4-6 TB usable space before local retention,
 snapshot, backup, or filesystem overhead policies.
 
 ## 🎛️ Options
