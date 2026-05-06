@@ -918,7 +918,7 @@ sync_one_repo() {
             "persistdir=${worker_persist}" \
             "logdir=${worker_log}"
         printf ' %q' "${arch_args[@]}"
-        printf ' --repoid %q --download-path %q --download-metadata --newest-only --delete --remote-time --norepopath' \
+        printf ' --repoid %q --download-path %q --download-metadata --delete --remote-time --norepopath' \
             "$repoid" \
             "$target_dir"
         if ((${#EXTRA_REPOSYNC_ARGS[@]})); then
@@ -937,7 +937,6 @@ sync_one_repo() {
         --repoid "$repoid" \
         --download-path "$target_dir" \
         --download-metadata \
-        --newest-only \
         --delete \
         --remote-time \
         --norepopath \
