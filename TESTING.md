@@ -16,6 +16,14 @@ repair.
 | RHEL | 8, 9, 10 | Oracle Linux matching major |
 | Rocky Linux | 8, 9, 10 | Oracle Linux matching major |
 
+## Boot Check On UEFI Systems
+
+Run the migration on a UEFI system as well as a BIOS system, and check that it
+boots into Oracle Linux after the reboot. Keep serial or graphical console
+access: if the system stops at a `grub>` prompt, the GRUB configuration that
+the Oracle Linux bootloader reads (`/boot/efi/EFI/redhat/grub.cfg` on EL7) is
+missing.
+
 ## Basic Smoke Test
 
 ```bash

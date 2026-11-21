@@ -3441,6 +3441,32 @@ set_default_boot_kernel() {
     fi
 }
 
+regenerate_el7_grub_config() {
+    local grub_cfg
+
+    # On UEFI systems the Oracle Linux bootloader is installed under
+    # /boot/efi/EFI/redhat, not under the directory a CentOS source used
+    # (/boot/efi/EFI/centos). The migration does not create a grub.cfg there,
+    # and without one GRUB stops at its "grub>" prompt after the reboot.
+    [[ "$SOURCE_MAJOR" == "7" ]] || return 0
+
+    if ! command -v grub2-mkconfig >/dev/null 2>&1; then
+        warn "grub2-mkconfig is not available; cannot regenerate the GRUB configuration"
+        return 0
+    fi
+
+    if [[ -d /sys/firmware/efi ]]; then
+        grub_cfg="/boot/efi/EFI/redhat/grub.cfg"
+    else
+        grub_cfg="/boot/grub2/grub.cfg"
+    fi
+
+    info "regenerating the GRUB configuration: ${grub_cfg}"
+    if ! run grub2-mkconfig -o "$grub_cfg"; then
+        warn "grub2-mkconfig failed; the system may not boot into Oracle Linux"
+    fi
+}
+
 cleanup_bootstrap_repos() {
     (( KEEP_BOOTSTRAP_REPOS )) && return 0
     local repo_file="${STATE_DIR}/dnf.repos.d/oraclelinux-migration-bootstrap.repo"
@@ -3674,6 +3700,7 @@ main() {
     remove_source_vendor_runtime_kernels
     replace_source_vendor_packages
     reassert_selected_kernel_default
+    regenerate_el7_grub_config
     cleanup_bootstrap_repos
     verify_result
     print_summary

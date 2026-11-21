@@ -172,8 +172,11 @@ all migration yum/dnf commands. `--proxy` cannot be used with `--yum-mirror`.
 11. 🧠 Installs the selected Oracle Linux kernel flavor.
 12. 🔍 Rechecks source-vendor RPMs and replaces remaining RHEL-vendor packages
     when Oracle replacements exist.
-13. ✅ Verifies `ID=ol` and the requested target version.
-14. 📊 Writes TSV and HTML reports.
+13. 🥾 On EL7 sources, regenerates the GRUB configuration with `grub2-mkconfig`
+    (`/boot/efi/EFI/redhat/grub.cfg` on UEFI systems, `/boot/grub2/grub.cfg`
+    otherwise).
+14. ✅ Verifies `ID=ol` and the requested target version.
+15. 📊 Writes TSV and HTML reports.
 
 ## 📊 Reports
 
