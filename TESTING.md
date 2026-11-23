@@ -16,6 +16,16 @@ repair.
 | RHEL | 8, 9, 10 | Oracle Linux matching major |
 | Rocky Linux | 8, 9, 10 | Oracle Linux matching major |
 
+## EL7 Boot Check
+
+Run EL7 migrations on both a UEFI system and a BIOS system. Keep serial or
+graphical console access available, reboot after migration, and confirm that
+the system reaches a login prompt. On UEFI, also confirm that `/boot/efi` is
+mounted during migration and that `/boot/efi/EFI/redhat/grub.cfg` is created.
+Confirm with `efibootmgr -v` that an Oracle Linux entry targets the installed
+`EFI/redhat/shim*.efi` loader and is present in `BootOrder`. On BIOS, confirm
+that `/boot/grub2/grub.cfg` is regenerated.
+
 ## Basic Smoke Test
 
 ```bash
