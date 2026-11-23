@@ -3441,6 +3441,101 @@ set_default_boot_kernel() {
     fi
 }
 
+running_under_uefi() {
+    [[ -d /sys/firmware/efi ]]
+}
+
+oracle_efi_shim_path() {
+    local candidate
+
+    for candidate in \
+        /boot/efi/EFI/redhat/shimx64.efi \
+        /boot/efi/EFI/redhat/shimaa64.efi; do
+        if [[ -f "$candidate" ]]; then
+            printf '%s\n' "$candidate"
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+efi_system_disk_and_partition() {
+    local esp_source esp_block esp_name parent_name part_number
+
+    command -v findmnt >/dev/null 2>&1 || \
+        die "findmnt is required to identify the EFI system partition"
+    command -v lsblk >/dev/null 2>&1 || \
+        die "lsblk is required to identify the EFI system disk"
+
+    esp_source="$(findmnt -n -o SOURCE --target /boot/efi)"
+    esp_block="$(readlink -f "$esp_source")"
+    esp_name="${esp_block##*/}"
+    parent_name="$(lsblk -n -o PKNAME "$esp_block" | awk 'NF { print; exit }')"
+    if [[ -z "$parent_name" || ! -r "/sys/class/block/${esp_name}/partition" ]]; then
+        die "unable to identify the disk and partition number for ${esp_source}"
+    fi
+    part_number="$(< "/sys/class/block/${esp_name}/partition")"
+    printf '/dev/%s\t%s\n' "$parent_name" "$part_number"
+}
+
+ensure_el7_uefi_boot_entry() {
+    local shim_path shim_loader boot_disk part_number
+
+    shim_path="$(oracle_efi_shim_path)" || \
+        die "Oracle Linux 7 UEFI shim was not installed under /boot/efi/EFI/redhat"
+    shim_loader="$(printf '%s' "${shim_path#/boot/efi}" | sed 's,/,\\,g')"
+
+    command -v efibootmgr >/dev/null 2>&1 || \
+        die "efibootmgr is required to register the Oracle Linux 7 UEFI loader"
+    if efibootmgr -v 2>> "$LOG_FILE" | grep -Fqi -- "$shim_loader"; then
+        info "Oracle Linux UEFI boot entry already targets ${shim_loader}"
+        return 0
+    fi
+
+    IFS=$'\t' read -r boot_disk part_number < <(efi_system_disk_and_partition)
+    [[ -n "$boot_disk" && -n "$part_number" ]] || \
+        die "unable to identify the EFI system disk and partition"
+
+    info "registering Oracle Linux UEFI loader ${shim_loader} on ${boot_disk} partition ${part_number}"
+    run efibootmgr --create \
+        --disk "$boot_disk" \
+        --part "$part_number" \
+        --label "Oracle Linux" \
+        --loader "$shim_loader" || \
+        die "failed to register ${shim_loader}; do not reboot until the UEFI boot entry is repaired"
+}
+
+regenerate_el7_grub_config() {
+    local grub_cfg
+
+    # Oracle Linux 7 reads its UEFI GRUB configuration from the redhat vendor
+    # directory.  The source distribution's configuration is not sufficient
+    # after its shim and GRUB packages have been replaced.
+    [[ "$SOURCE_MAJOR" == "7" ]] || return 0
+
+    command -v grub2-mkconfig >/dev/null 2>&1 || \
+        die "grub2-mkconfig is required to generate the Oracle Linux 7 boot configuration"
+
+    if running_under_uefi; then
+        command -v mountpoint >/dev/null 2>&1 || \
+            die "mountpoint is required to validate the EFI system partition"
+        mountpoint -q /boot/efi || \
+            die "/boot/efi is not mounted; refusing to write the Oracle Linux 7 UEFI boot configuration"
+        grub_cfg="/boot/efi/EFI/redhat/grub.cfg"
+    else
+        grub_cfg="/boot/grub2/grub.cfg"
+    fi
+
+    info "regenerating the GRUB configuration: ${grub_cfg}"
+    run grub2-mkconfig -o "$grub_cfg" || \
+        die "failed to generate ${grub_cfg}; do not reboot until the boot configuration is repaired"
+
+    if running_under_uefi; then
+        ensure_el7_uefi_boot_entry
+    fi
+}
+
 cleanup_bootstrap_repos() {
     (( KEEP_BOOTSTRAP_REPOS )) && return 0
     local repo_file="${STATE_DIR}/dnf.repos.d/oraclelinux-migration-bootstrap.repo"
@@ -3674,9 +3769,12 @@ main() {
     remove_source_vendor_runtime_kernels
     replace_source_vendor_packages
     reassert_selected_kernel_default
+    regenerate_el7_grub_config
     cleanup_bootstrap_repos
     verify_result
     print_summary
 }
 
-main "$@"
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+    main "$@"
+fi
